@@ -1,0 +1,41 @@
+CREATE TABLE "User" (
+    "username" TEXT,
+    "password" TEXT,
+    "email" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "gender" TEXT,
+    "personID" TEXT,
+    PRIMARY KEY("username")
+);
+
+CREATE TABLE "Person" (
+    "personID" TEXT,
+    "associatedUsername" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "gender" TEXT,
+    "fatherID" TEXT,
+    "motherID" TEXT,
+    "spouseID" TEXT,
+    PRIMARY KEY("personID")
+);
+
+CREATE TABLE "Event" (
+    "eventID" TEXT,
+    "associatedUsername" TEXT,
+    "personID" TEXT,
+    "latitude" float,
+    "longitude" float,
+    "country" TEXT,
+    "city" TEXT,
+    "eventType" TEXT,
+    "year" INTEGER,
+    PRIMARY KEY("eventID")
+);
+
+CREATE TABLE "Authtoken"(
+    "authtoken" TEXT,
+    "username" TEXT,
+    PRIMARY KEY("authtoken")
+);
