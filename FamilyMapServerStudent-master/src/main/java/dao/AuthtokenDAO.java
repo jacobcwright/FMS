@@ -2,6 +2,7 @@ package dao;
 
 import model.Authtoken;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 
 /**
@@ -26,7 +27,7 @@ public class AuthtokenDAO {
      * adds authtoken a to table
      * @param a
      */
-    public void add(String a){
+    public void add(String a) throws DataAccessException {
 
     }
 
@@ -34,7 +35,7 @@ public class AuthtokenDAO {
      * removes authtoken a from table
      * @param a
      */
-    public void remove(String a){
+    public void remove(String a) throws DataAccessException {
 
     }
 
@@ -43,14 +44,14 @@ public class AuthtokenDAO {
      * @param a
      * @return
      */
-    public Authtoken get(String a){
+    public Authtoken get(String a) throws DataAccessException {
         return null;
     }
 
     /**
      * clear authtokens
      */
-    public void clear(){
+    public void clear() throws DataAccessException {
 
     }
 
