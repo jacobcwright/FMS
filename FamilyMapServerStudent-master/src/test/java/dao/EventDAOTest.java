@@ -1,6 +1,7 @@
 package dao;
 
 import model.Event;
+import model.Person;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,5 +72,19 @@ public class EventDAOTest {
         // the "()->", and the assertThrows assertion expects the code that ran to throw an
         // instance of the class in the first parameter, which in this case is a DataAccessException.
         assertThrows(DataAccessException.class, () -> eDao.insert(bestEvent));
+    }
+
+    @Test
+    public void clearTest() throws DataAccessException {
+        // insert person
+        eDao.insert(bestEvent);
+
+        // clear database
+        eDao.clear();
+
+        //check if cleared
+        Event found = eDao.find(bestEvent.getEventID());
+
+        assertNull(found);
     }
 }

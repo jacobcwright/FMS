@@ -100,9 +100,15 @@ public class EventDAO {
     }
 
     /**
-     * clear events
+     * clear Event table
      */
-    public void clear(){
-
+    public void clear() throws DataAccessException {
+        String sql = "DELETE FROM Events;";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while clearing database");
+        }
     }
 }
