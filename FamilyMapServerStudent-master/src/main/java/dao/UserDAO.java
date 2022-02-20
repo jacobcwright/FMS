@@ -26,8 +26,9 @@ public class UserDAO {
     }
 
     /**
-     * Adds user u to database
+     * Adds user to table
      * @param u
+     * @throws DataAccessException
      */
     public void insert(User u) throws DataAccessException {
 
@@ -51,7 +52,8 @@ public class UserDAO {
     /**
      * Gets user from database based on username
      * @param username
-     * @return User
+     * @return
+     * @throws DataAccessException
      */
     public User getUser(String username) throws DataAccessException {
         User user;
@@ -104,7 +106,8 @@ public class UserDAO {
     }
 
     /**
-     * clear users
+     * clears User table
+     * @throws DataAccessException
      */
     public void clear() throws DataAccessException{
         String sql = "DELETE FROM User;";

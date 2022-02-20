@@ -100,7 +100,8 @@ public class EventDAO {
     }
 
     /**
-     * clear Event table
+     * clears event table
+     * @throws DataAccessException
      */
     public void clear() throws DataAccessException {
         String sql = "DELETE FROM Events;";
