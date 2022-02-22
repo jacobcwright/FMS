@@ -1,7 +1,6 @@
-# FMS
+# FMS - Family Map Server
 Family Map Server Specification
 Acknowledgements
-The Family Map project was created by Jordan Wild. Thanks to Jordan for this significant contribution.
 Family Map Introduction
 Family Map is an application that provides a geographical view of your family history. One of the most exciting aspects of researching family history is discovering your origins. Family Map provides a detailed view of where you came from. It does so by displaying information about important events in your ancestors’ lives (birth, marriage, death, etc.), and plotting their locations on a Google map.
 
