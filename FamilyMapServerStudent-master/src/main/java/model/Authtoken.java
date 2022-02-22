@@ -39,4 +39,18 @@ public class Authtoken {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    /**
+     * Equals override for Authtoken
+     * compares authtoken (String) & username (String)
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        Authtoken token = (Authtoken) obj;
+        if(!this.authtoken.equals(token.getAuthtoken())) return false;
+        if(!this.username.equals(token.getUsername())) return false;
+        return true;
+    }
 }
