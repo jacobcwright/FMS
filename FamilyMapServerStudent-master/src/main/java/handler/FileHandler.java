@@ -11,18 +11,17 @@ import java.nio.file.*;
 
 public class FileHandler implements HttpHandler {
 
-//    String filePathStr = "web" + FileSystems.getDefault().getSeparator();
-//    Path filePath = FileSystems.getDefault().getPath(filePathStr);
-//    Files.copy(filePath, httpExch.getResponseBody());
-    String prefix;
-
     public void handle(HttpExchange exchange) throws IOException {
         boolean success = false;
 
         try {
             if(exchange.getRequestMethod().toLowerCase().equals("get")){
                 Headers reqHeaders = exchange.getRequestHeaders();
-                String filePathStr = "web" + FileSystems.getDefault().getSeparator() + "index.html";
+                String url = exchange.getRequestURI().toString();
+                String filePathStr = "web" + url;
+                if(filePathStr.equals("web/")){
+                    filePathStr = "web/index.html";
+                }
                 System.out.println("File Path is: " + filePathStr);
                 Path filePath = FileSystems.getDefault().getPath(filePathStr);
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
