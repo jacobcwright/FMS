@@ -30,6 +30,11 @@ public class FileHandler implements HttpHandler {
                 respBody.close();
                 success = true;
             }
+            else {
+                // not using get
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_METHOD, 0);
+                exchange.getResponseBody().close();
+            }
 
             if(!success){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
