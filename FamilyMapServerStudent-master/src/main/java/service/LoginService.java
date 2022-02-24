@@ -10,6 +10,8 @@ import request.LoginRequest;
 import result.LoginResult;
 import result.Response;
 
+import java.util.UUID;
+
 
 /**
  * Login service class
@@ -30,9 +32,9 @@ public class LoginService {
             User u = new UserDAO(db.getConnection()).getUser(l.getUsername());
             if(u.getPassword().equals(l.getPassword())){
                 // generate authtoken
-
+                String token = UUID.randomUUID().toString();
                 // make authtoken model
-                Authtoken a = new Authtoken("random", l.getUsername());
+                Authtoken a = new Authtoken(token, l.getUsername());
                 // add to authtoken db
                 new AuthtokenDAO(db.getConnection()).add(a);
                 db.closeConnection(true);
