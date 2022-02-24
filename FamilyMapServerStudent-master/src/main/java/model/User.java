@@ -53,6 +53,24 @@ public class User {
         this.personID = personID;
     }
 
+    /**
+     * User constructor with all param except personID
+     * @param username
+     * @param password
+     * @param email
+     * @param firstName
+     * @param lastName
+     * @param gender
+     */
+    public User(String username, String password, String email, String firstName, String lastName, String gender) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+    }
+
     public String getUsername() {
         return username;
     }

@@ -29,6 +29,7 @@ public class LoginResult extends Response{
         this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
+        this.success = true;
     }
 
     public String getAuthtoken() {
