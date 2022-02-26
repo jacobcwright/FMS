@@ -40,6 +40,7 @@ public class LoginService {
                 db.closeConnection(true);
 
                 LoginResult result = new LoginResult(a.getAuthtoken(),l.getUsername(), u.getPersonID());
+                return result;
             }
             // password is incorrect
             else {

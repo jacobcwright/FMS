@@ -21,7 +21,7 @@ import java.net.HttpURLConnection;
  * validates authtoken, deserialize Json req to Java, Calls service class, Receive result from service,
  * Serialize Java result to JSON, Send HTTP Response according to result
  */
-public class LoginHandler implements HttpHandler {
+public class LoginHandler extends BaseHandler {
     /**
      * login handle
      * @param exchange
@@ -37,10 +37,11 @@ public class LoginHandler implements HttpHandler {
             if(exchange.getRequestMethod().toLowerCase().equals("post")){
                 // get req headers & req body
                 Headers reqHeaders = exchange.getRequestHeaders();
-                InputStream reqData = exchange.getRequestBody();
+                InputStream inputBody = exchange.getRequestBody();
+                String reqData = StreamToString(inputBody);
 
                 // parse req body from json
-                LoginRequest request = (LoginRequest)gson.fromJson(reqData.toString(), LoginRequest.class);
+                LoginRequest request = gson.fromJson(reqData.toString(), LoginRequest.class);
 
                 // make login service & login
                 LoginService service = new LoginService();

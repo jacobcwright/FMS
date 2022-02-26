@@ -51,7 +51,6 @@ public class RegisterHandler extends BaseHandler {
                 RegisterService service = new RegisterService();
                 RegisterResult result = service.register(request);
 
-                String responseData = gson.toJson(result);
                 // send response
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
