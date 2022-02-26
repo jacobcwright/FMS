@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
+import java.util.Scanner;
 
 /**
  * Handler for Log-in
@@ -24,7 +25,7 @@ import java.net.HttpURLConnection;
  * validates authtoken, deserialize Json req to Java, Calls service class, Receive result from service,
  * Serialize Java result to JSON, Send HTTP Response according to result
  */
-public class RegisterHandler implements HttpHandler {
+public class RegisterHandler extends BaseHandler {
 
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in RegisterHandler");
@@ -35,25 +36,30 @@ public class RegisterHandler implements HttpHandler {
 
             if(exchange.getRequestMethod().toLowerCase().equals("post")){
                 System.out.println("in if statement");
+
                 // get req headers & req body
                 Headers reqHeaders = exchange.getRequestHeaders();
-                InputStream reqData = exchange.getRequestBody();
+                InputStream inputBody = exchange.getRequestBody();
+                String reqData = StreamToString(inputBody);
 
-                System.out.println(exchange);
+                System.out.println(reqData);
 
                 // parse req body from json
-                RegisterRequest request = (RegisterRequest) gson.fromJson(reqData.toString(), RegisterRequest.class);
+                RegisterRequest request = gson.fromJson(reqData, RegisterRequest.class);
 
                 // make register service & login
                 RegisterService service = new RegisterService();
                 RegisterResult result = service.register(request);
 
+                String responseData = gson.toJson(result);
                 // send response
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
                 gson.toJson(result, resBody);
                 resBody.close();
                 success = true;
+
+                System.out.println("Register Success!");
             }
             // if something failed
             if(!success){
