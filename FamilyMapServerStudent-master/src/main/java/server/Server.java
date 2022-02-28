@@ -7,7 +7,6 @@ import handler.*;
 
 import com.sun.net.httpserver.*;
 
-
 public class Server {
     // The maximum number of waiting incoming connections to queue.
     private static final int MAX_WAITING_CONNECTIONS = 12;
@@ -62,14 +61,13 @@ public class Server {
 
         server.createContext("/clear", new ClearHandler());
         server.createContext("/load", new LoadHandler());
-        // For fill handler we need username?
         server.createContext("/fill", new FillHandler());
         server.createContext("/user/login", new LoginHandler());
         server.createContext("/user/register", new RegisterHandler());
-        // also eventID handler?
         server.createContext("/event", new EventHandler());
-        // also personID handler?
+        server.createContext("/event/", new EventIDHandler());
         server.createContext("/person", new PersonHandler());
+        server.createContext("/person/", new PersonIDHandler());
         // default handler
         server.createContext("/", new FileHandler());
 
