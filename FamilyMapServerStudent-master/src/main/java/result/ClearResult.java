@@ -17,4 +17,13 @@ public class ClearResult extends Response{
         }
     }
 
+    /**
+     *
+     * @param b
+     * @param m
+     */
+    public ClearResult(boolean b, String m) {
+        success = b;
+        message = m;
+    }
 }
