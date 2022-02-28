@@ -12,6 +12,7 @@ public class ClearService {
      * @return
      */
     public ClearResult clear(){
+
         return null;
     }
 }

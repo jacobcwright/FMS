@@ -51,13 +51,13 @@ public class RegisterService {
 
             db.closeConnection(true);
 
+            // return result
             RegisterResult result = new RegisterResult(a.getAuthtoken(), u.getUsername(), u.getPersonID());
             return result;
         } catch(DataAccessException e){
             e.printStackTrace();
             db.closeConnection(false);
             Response result = new Response(false, "Error");
-
         }
         return null;
     }

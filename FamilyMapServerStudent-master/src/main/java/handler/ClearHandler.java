@@ -1,9 +1,8 @@
 package handler;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
-public class ClearHandler implements HttpHandler {
+public class ClearHandler extends BaseHandler {
     public void handle(HttpExchange exchange){
 
     }
