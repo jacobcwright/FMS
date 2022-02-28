@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.file.*;
 
-public class FileHandler implements HttpHandler {
+public class FileHandler extends BaseHandler {
 
     public void handle(HttpExchange exchange) throws IOException {
         boolean success = false;
