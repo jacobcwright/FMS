@@ -1,5 +1,7 @@
 package result;
 
+import model.Event;
+
 /**
  * EventID Result Class
  */
@@ -72,6 +74,18 @@ public class EventIDResult extends Response{
             this.city = city;
             this.eventType = eventType;
             this.year = year;
+    }
+
+    public EventIDResult(Event e){
+        this.associatedUsername = e.getUsername();
+        this.eventID = e.getEventID();
+        this.personID = e.getPersonID();
+        this.latitude = (float) e.getLatitude();
+        this.longitude = (float) e.getLongitude();
+        this.country = e.getCountry();
+        this.city = e.getCity();
+        this.eventType = e.getEventType();
+        this.year = e.getYear();
     }
 
 }

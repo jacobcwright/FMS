@@ -52,7 +52,6 @@ public class LoginService {
         } catch(DataAccessException e){
             e.printStackTrace();
             db.closeConnection(false);
-
             Response result = new Response(false, "Error");
 
         }

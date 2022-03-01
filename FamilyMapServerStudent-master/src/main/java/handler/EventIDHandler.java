@@ -22,29 +22,37 @@ public class EventIDHandler extends BaseHandler{
             Gson gson = new Gson();
 
             if(exchange.getRequestMethod().toLowerCase().equals("get")){
+            // if something failed
                 // get req headers & req body
                 Headers reqHeaders = exchange.getRequestHeaders();
-                InputStream inputBody = exchange.getRequestBody();
-                String reqData = StreamToString(inputBody);
 
-                System.out.println(reqData);
+                //check auth
+                if(reqHeaders.containsKey("Authorization")) {
+                    // Extract the auth token from the "Authorization" header
+                    String authToken = reqHeaders.getFirst("Authorization");
 
-                // parse req body from json
-                EventIDRequest request = gson.fromJson(reqData, EventIDRequest.class);
+                    // get id from url
+                    String path = exchange.getRequestURI().toString();
+                    String segments[] = path.split("/");
+                    String id = segments[segments.length - 1];
 
-                // make register service & login
-                EventIDService service = new EventIDService();
-                EventIDResult result = service.eventID(request);
-                // send response
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
-                gson.toJson(result, resBody);
-                resBody.close();
-                success = true;
+                    // create request object
+                    EventIDRequest req = new EventIDRequest(id, authToken);
 
-                System.out.println("Register Success!");
+                    // make register service & login
+                    EventIDService service = new EventIDService();
+                    EventIDResult result = service.eventID(req);
+
+                    // send response
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                    gson.toJson(result, resBody);
+                    resBody.close();
+                    success = true;
+
+                    System.out.println("Register Success!");
+                }
             }
-            // if something failed
             if(!success){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();
