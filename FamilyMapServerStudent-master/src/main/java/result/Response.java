@@ -14,11 +14,14 @@ public class Response {
      */
     String message;
 
-    public Response() {
-    }
+    public Response() {}
 
     public Response(Boolean success, String message) {
         this.success = success;
         this.message = message;
+    }
+
+    public Boolean getSuccess() {
+        return success;
     }
 }

@@ -28,24 +28,30 @@ public class EventIDService extends AuthtokenChecker{
             db.openConnection();
             // check if authtoken is associated with user
             Authtoken authtoken = this.getUser(e.getAuthtoken(), db.getConnection());
-            if(authtoken.getUsername().isEmpty()){
+            if(authtoken == null){
                 throw new IOException("No authtoken provided");
             }
             // return single event object
             Event found = new EventDAO(db.getConnection()).find(e.getEventID());
+
+            if(found == null){
+                throw new IOException("Invalid eventID provided");
+            }
+
             db.closeConnection(true);
             return new EventIDResult(found);
 
         } catch (DataAccessException ex) {
             ex.printStackTrace();
             db.closeConnection(false);
-            Response result = new Response(false, ex.getMessage());
+            EventIDResult result = new EventIDResult(false, ex.getMessage());
+            return result;
         }
         catch (IOException ex) {
             ex.printStackTrace();
             db.closeConnection(false);
-            Response result = new Response(false, ex.getMessage());
+            EventIDResult result = new EventIDResult(false, ex.getMessage());
+            return result;
         }
-        return null;
     }
 }

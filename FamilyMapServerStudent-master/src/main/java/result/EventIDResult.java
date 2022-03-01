@@ -65,7 +65,7 @@ public class EventIDResult extends Response{
      */
     public EventIDResult(Boolean success, String associatedUsername, String eventID, String personID, float latitude, float longitude,
                          String country, String city, String eventType, int year) {
-            this.associatedUsername = associatedUsername;
+        this.associatedUsername = associatedUsername;
             this.eventID = eventID;
             this.personID = personID;
             this.latitude = latitude;
@@ -86,6 +86,10 @@ public class EventIDResult extends Response{
         this.city = e.getCity();
         this.eventType = e.getEventType();
         this.year = e.getYear();
+    }
+
+    public EventIDResult(boolean b, String message) {
+        super(b, message);
     }
 
 }

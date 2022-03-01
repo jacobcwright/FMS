@@ -43,14 +43,16 @@ public class EventIDHandler extends BaseHandler{
                     EventIDService service = new EventIDService();
                     EventIDResult result = service.eventID(req);
 
-                    // send response
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
-                    gson.toJson(result, resBody);
-                    resBody.close();
-                    success = true;
+                    if (result.getSuccess()) {
+                        // send response
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                        Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                        gson.toJson(result, resBody);
+                        resBody.close();
+                        success = true;
 
-                    System.out.println("Register Success!");
+                        System.out.println("Register Success!");
+                    }
                 }
             }
             if(!success){

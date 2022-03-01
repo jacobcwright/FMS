@@ -24,12 +24,12 @@ public class ClearService {
             new PersonDAO(db.getConnection()).clear();
             new UserDAO(db.getConnection()).clear();
             ClearResult result = new ClearResult(true, "Clear succeeded");
+            db.closeConnection(true);
             return result;
         }
         catch(Exception e){
             e.printStackTrace();
             db.closeConnection(false);
-
             Response result = new Response(false, "Error");
         }
         return null;
