@@ -15,6 +15,9 @@ public class FillService {
      * and must be a non-negative integer (the default is 4, which results in 31 new persons each with associated events).
      */
     public FillResult fill(FillRequest f){
+        System.out.println("in Fill Service");
+        System.out.print(f.toString());
+
         return null;
     }
 }

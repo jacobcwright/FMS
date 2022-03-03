@@ -5,6 +5,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import request.EventIDRequest;
 import result.EventIDResult;
+import service.AuthtokenChecker;
 import service.EventIDService;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +23,6 @@ public class EventIDHandler extends BaseHandler{
             Gson gson = new Gson();
 
             if(exchange.getRequestMethod().toLowerCase().equals("get")){
-            // if something failed
                 // get req headers & req body
                 Headers reqHeaders = exchange.getRequestHeaders();
 
@@ -51,7 +51,7 @@ public class EventIDHandler extends BaseHandler{
                         resBody.close();
                         success = true;
 
-                        System.out.println("Register Success!");
+                        System.out.println("EventID Success!");
                     }
                 }
             }
