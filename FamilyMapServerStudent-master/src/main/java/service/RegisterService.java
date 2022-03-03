@@ -1,10 +1,8 @@
 package service;
 
-import dao.AuthtokenDAO;
-import dao.DataAccessException;
-import dao.Database;
-import dao.UserDAO;
+import dao.*;
 import model.Authtoken;
+import model.Person;
 import model.User;
 import request.RegisterRequest;
 import result.RegisterResult;
@@ -48,6 +46,10 @@ public class RegisterService {
             Authtoken a = new Authtoken(token, u.getUsername());
             // add to authtoken db
             new AuthtokenDAO(db.getConnection()).add(a);
+
+            Person p = new Person(u.getPersonID(), u.getUsername(), u.getFirstName(), u.getLastName(), u.getGender());
+            // add person to Person db
+            new PersonDAO(db.getConnection()).insert(p);
 
             db.closeConnection(true);
 
