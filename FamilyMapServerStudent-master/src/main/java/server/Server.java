@@ -2,6 +2,10 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import handler.*;
 
@@ -26,7 +30,6 @@ public class Server {
     // The "portNumber" parameter specifies the port number on which the
     // server should accept incoming client connections.
     private void run(String portNumber) {
-
         // Since the server has no "user interface", it should display "log"
         // messages containing information about its internal activities.
         // This allows a system administrator (or you) to know what is happening

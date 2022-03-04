@@ -58,4 +58,12 @@ public class DataGenerator {
         // Call Generate on Father
 
     }
+
+    private void GenerateEvents(Person person){
+
+    }
+
+    private void GeneratePerson(){
+        
+    }
 }
