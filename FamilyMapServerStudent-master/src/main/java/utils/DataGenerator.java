@@ -74,8 +74,7 @@ public class DataGenerator {
         if(generations == 0){
             // create events for person
             // birth event
-            Event birth = GenerateBirth(currentPerson);
-            events.add(birth);
+            GenerateBirth(currentPerson);
             return;
         }
         // create Mother & Father of current person
@@ -87,10 +86,8 @@ public class DataGenerator {
         currentPerson.setFatherID(father.getPersonID());
 
         // Create Events for current person
-        Event birth = GenerateBirth(currentPerson);
-        events.add(birth);
-        Event death = GenerateDeath(currentPerson);
-        events.add(death);
+        GenerateBirth(currentPerson);
+        GenerateDeath(currentPerson);
 
         // decrement generation & year
         generations--;
@@ -105,7 +102,7 @@ public class DataGenerator {
     }
 
 
-    private Event GenerateBirth(Person person){
+    private void GenerateBirth(Person person){
         // get location for event
         Event event = GenerateLocation();
         // set eventID
@@ -116,10 +113,10 @@ public class DataGenerator {
         event.setEventType("Birth");
         event.setYear(GenerateBirthYear());
         person.setBirthYear(event.getYear());
-        return event;
+        events.add(event);
     }
 
-    private Event GenerateDeath(Person person){
+    private void GenerateDeath(Person person){
         // get location for event
         Event event = GenerateLocation();
         // set eventID
@@ -130,12 +127,31 @@ public class DataGenerator {
         event.setEventType("Death");
         event.setYear(GenerateDeathYear(person.getBirthYear()));
         person.setDeathYear(event.getYear());
-        return event;
+        events.add(event);
+        return;
     }
 
-    private Event GenerateMarriage(Person person){
+    private void GenerateMarriage(Person wife, Person husband){
+        // create marriage event for wife
+        Event wifeMarriage = GenerateLocation();
+        wifeMarriage.setEventID(String.valueOf(UUID.randomUUID()));
+        wifeMarriage.setUsername(wife.getAssociatedUsername());
+        wifeMarriage.setPersonID(wife.getPersonID());
+        wifeMarriage.setEventType("Marriage");
+        wifeMarriage.setYear(GenerateMarriageYear(wife.getBirthYear(), wife.getDeathYear()));
+        events.add(wifeMarriage);
 
-        return null;
+        // create marriage event for husband
+        Event husbandMarriage = new Event((float) wifeMarriage.getLatitude(), (float) wifeMarriage.getLongitude(),
+                wifeMarriage.getCountry(), wifeMarriage.getCity());
+        husbandMarriage.setEventID(String.valueOf(UUID.randomUUID()));
+        husbandMarriage.setUsername(husband.getAssociatedUsername());
+        husbandMarriage.setPersonID(husband.getPersonID());
+        husbandMarriage.setEventType("Marriage");
+        husbandMarriage.setYear(wifeMarriage.getYear());
+        events.add(husbandMarriage);
+
+        return;
     }
 
     private Event GenerateEvent(Person person){
@@ -191,6 +207,22 @@ public class DataGenerator {
             deathYear = 2022;
         }
         return deathYear;
+    }
+
+    /**
+     * Generates random marriage year
+     * @return
+     */
+    private int GenerateMarriageYear(int birth, int death){
+        Random ran = new Random();
+        int marriage = birth + ran.nextInt(10) + 13;
+        if(marriage >= 2022){
+            marriage = 2022;
+        }
+        if(marriage > death){
+            marriage = death - 1;
+        }
+        return marriage;
     }
 
 }
