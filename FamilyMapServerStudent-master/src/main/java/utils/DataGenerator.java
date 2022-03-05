@@ -17,16 +17,22 @@ public class DataGenerator {
     ArrayList<Person> people;
     ArrayList<Event> events;
     int generations;
+    int year;
+    static int GENERATION_GAP = 30;
 
 
     public DataGenerator(ArrayList<Person> people, ArrayList<Event> events, int generations) {
         this.people = people;
         this.events = events;
         this.generations = generations;
+        // year at 2003, so each user is 18+
+        year = 2003;
     }
 
     public DataGenerator(int generations) {
         this.generations = generations;
+        // year at 2003, so each user is 18+
+        year = 2003;
     }
 
     public ArrayList<Person> getPeople() {
@@ -70,21 +76,30 @@ public class DataGenerator {
             // birth event
 
         }
-        GenerateBirth(currentPerson);
+        Event birth = GenerateBirth(currentPerson);
         // create Mother & Father of current person
         // Set Mother & Father IDs of current person
         // Create Events for current person
-        // decrement generation
+        // decrement generation & year
         generations--;
+        year -= GENERATION_GAP; // 30 years for each generation
         // Call Generate on Mother
         // Call Generate on Father
 
     }
 
 
-    private void GenerateBirth(Person person){
-        // Event birth = new Event(UUID.randomUUID(), person.getAssociatedUsername(), person.getPersonID(), )
+    private Event GenerateBirth(Person person){
+        // get location for event
         Event event = GenerateLocation();
+        // set eventID
+        event.setEventID(String.valueOf(UUID.randomUUID()));
+        //set remaining parameters
+        event.setUsername(person.getAssociatedUsername());
+        event.setPersonID(person.getPersonID());
+        event.setEventType("Birth");
+        event.setYear(GenerateYear());
+        return event;
     }
 
     private void GenerateDeath(Person person){
@@ -105,19 +120,31 @@ public class DataGenerator {
 
     private Event GenerateLocation(){
         try{
+            // create random to get random int for event
             Random ran = new Random();
             Gson gson = new Gson();
             Reader reader = Files.newBufferedReader(Paths.get("json/locations.json"));
+
+            // get json into array of locations
             JsonArray locations = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("data");
+
+            // get random location & instantiate event & return it
             int ranInt = ran.nextInt(locations.size());
             JsonElement eventJson = locations.get(ranInt);
             Event event = gson.fromJson(eventJson, Event.class);
             assert(event != null);
+            reader.close();
             return event;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private int GenerateYear(){
+        Random ran = new Random();
+        year -= ran.nextInt(10);
+        return year;
     }
 
 }
