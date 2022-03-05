@@ -74,18 +74,34 @@ public class DataGenerator {
         if(generations == 0){
             // create events for person
             // birth event
-
+            Event birth = GenerateBirth(currentPerson);
+            events.add(birth);
+            return;
         }
-        Event birth = GenerateBirth(currentPerson);
         // create Mother & Father of current person
+        Person mother = null;
+        Person father = null;
+
         // Set Mother & Father IDs of current person
+        currentPerson.setMotherID(mother.getPersonID());
+        currentPerson.setFatherID(father.getPersonID());
+
         // Create Events for current person
+        Event birth = GenerateBirth(currentPerson);
+        events.add(birth);
+        Event death = GenerateDeath(currentPerson);
+        events.add(death);
+
         // decrement generation & year
         generations--;
         year -= GENERATION_GAP; // 30 years for each generation
-        // Call Generate on Mother
-        // Call Generate on Father
 
+        // Call Generate on Mother
+        Generate(mother);
+        // Call Generate on Father
+        Generate(father);
+
+        return;
     }
 
 
@@ -98,20 +114,33 @@ public class DataGenerator {
         event.setUsername(person.getAssociatedUsername());
         event.setPersonID(person.getPersonID());
         event.setEventType("Birth");
-        event.setYear(GenerateYear());
+        event.setYear(GenerateBirthYear());
+        person.setBirthYear(event.getYear());
         return event;
     }
 
-    private void GenerateDeath(Person person){
-
+    private Event GenerateDeath(Person person){
+        // get location for event
+        Event event = GenerateLocation();
+        // set eventID
+        event.setEventID(String.valueOf(UUID.randomUUID()));
+        //set remaining parameters
+        event.setUsername(person.getAssociatedUsername());
+        event.setPersonID(person.getPersonID());
+        event.setEventType("Death");
+        event.setYear(GenerateDeathYear(person.getBirthYear()));
+        person.setDeathYear(event.getYear());
+        return event;
     }
 
-    private void GenerateMarriage(Person person){
+    private Event GenerateMarriage(Person person){
 
+        return null;
     }
 
-    private void GenerateEvent(Person person){
+    private Event GenerateEvent(Person person){
 
+        return null;
     }
 
     private void GeneratePerson(Person person){
@@ -141,10 +170,27 @@ public class DataGenerator {
         return null;
     }
 
-    private int GenerateYear(){
+    /**
+     * Generates random birth year
+     * @return
+     */
+    private int GenerateBirthYear(){
         Random ran = new Random();
-        year -= ran.nextInt(10);
-        return year;
+        int birthYear = year - ran.nextInt(10);
+        return birthYear;
+    }
+
+    /**
+     * Generates random death year
+     * @return
+     */
+    private int GenerateDeathYear(int birth){
+        Random ran = new Random();
+        int deathYear = birth + ran.nextInt(107) + 13;
+        if(deathYear >= 2022){
+            deathYear = 2022;
+        }
+        return deathYear;
     }
 
 }

@@ -55,6 +55,16 @@ public class Person {
     String spouseID;
 
     /**
+     * Year of birth
+     */
+    int birthYear;
+
+    /**
+     * Year of death
+     */
+    int deathYear;
+
+    /**
      * Person Constructor with params.
      * @param personID
      * @param associatedUsername
@@ -75,6 +85,8 @@ public class Person {
         this.fatherID = fatherID;
         this.motherID = motherID;
         this.spouseID = spouseID;
+        birthYear = 0;
+        deathYear = 0;
     }
 
     /**
@@ -92,6 +104,8 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+        birthYear = 0;
+        deathYear = 0;
     }
 
     public String getPersonID() {
@@ -156,6 +170,22 @@ public class Person {
 
     public void setSpouseID(String spouseID) {
         this.spouseID = spouseID;
+    }
+
+    public int getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    public int getDeathYear() {
+        return deathYear;
+    }
+
+    public void setDeathYear(int deathYear) {
+        this.deathYear = deathYear;
     }
 
     @Override
