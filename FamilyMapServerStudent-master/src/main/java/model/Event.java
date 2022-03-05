@@ -74,6 +74,19 @@ public class Event {
         this.year = year;
     }
 
+    /**
+     * Constructor for location
+     * @param latitude
+     * @param longitude
+     * @param country
+     * @param city
+     */
+    public Event(float latitude, float longitude, String country, String city) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.country = country;
+        this.city = city;
+    }
 
     /**
      * Get the Event ID
