@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.UUID;
 
 public class DataGenerator {
@@ -71,37 +70,13 @@ public class DataGenerator {
     // Each event will have a unique event ID, but both marriage events must have matching years and locations.
     // Event locations may be randomly selected, or you may try to make them more realistic
     public void Generate(Person currentPerson){
-        if(generations == 0){
-            // create events for person
-            // birth event
-            GenerateBirth(currentPerson);
-            return;
-        }
-        // create Mother & Father of current person
-        Person mother = null;
-        Person father = null;
 
-        // Set Mother & Father IDs of current person
-        currentPerson.setMotherID(mother.getPersonID());
-        currentPerson.setFatherID(father.getPersonID());
-
-        // Create Events for current person
-        GenerateBirth(currentPerson);
-        GenerateDeath(currentPerson);
-
-        // decrement generation & year
-        generations--;
-        year -= GENERATION_GAP; // 30 years for each generation
-
-        // Call Generate on Mother
-        Generate(mother);
-        // Call Generate on Father
-        Generate(father);
-
-        return;
     }
 
-
+    /**
+     * Generates Birth event for person
+     * @param person
+     */
     private void GenerateBirth(Person person){
         // get location for event
         Event event = GenerateLocation();
@@ -116,6 +91,10 @@ public class DataGenerator {
         events.add(event);
     }
 
+    /**
+     * Generates death event for person
+     * @param person
+     */
     private void GenerateDeath(Person person){
         // get location for event
         Event event = GenerateLocation();
@@ -128,13 +107,21 @@ public class DataGenerator {
         event.setYear(GenerateDeathYear(person.getBirthYear()));
         person.setDeathYear(event.getYear());
         events.add(event);
-        return;
     }
 
+    /**
+     * Generates marriage events for wife & husband
+     * @param wife Person Object
+     * @param husband Person Object
+     */
     private void GenerateMarriage(Person wife, Person husband){
+        // set IDs
+        husband.setSpouseID(wife.getPersonID());
+        wife.setSpouseID(husband.getPersonID());
+
         // create marriage event for wife
         Event wifeMarriage = GenerateLocation();
-        wifeMarriage.setEventID(String.valueOf(UUID.randomUUID()));
+        wifeMarriage.setEventID(UUID.randomUUID().toString());
         wifeMarriage.setUsername(wife.getAssociatedUsername());
         wifeMarriage.setPersonID(wife.getPersonID());
         wifeMarriage.setEventType("Marriage");
@@ -150,19 +137,66 @@ public class DataGenerator {
         husbandMarriage.setEventType("Marriage");
         husbandMarriage.setYear(wifeMarriage.getYear());
         events.add(husbandMarriage);
-
-        return;
     }
 
-    private Event GenerateEvent(Person person){
+    private void GenerateEvent(Person person){
 
+
+    }
+
+    private Person GeneratePerson(Person currentPerson, String gender){
+        // create Person with name based on gender
+        Person newPerson = GeneratePersonName(gender);
+
+        // set remaining params
+        newPerson.setPersonID(UUID.randomUUID().toString());
+        newPerson.setAssociatedUsername(currentPerson.getAssociatedUsername());
+
+        return newPerson;
+    }
+
+    private Person GeneratePersonName(String gender){
+        Random ran = new Random();
+        Gson gson = new Gson();
+        Reader reader;
+        try {
+            // if male
+            if(gender == "m"){
+                // get male first names
+                reader = Files.newBufferedReader(Paths.get("json/mnames.json"));
+            }
+            // female
+            else{
+                // get female first names
+                reader = Files.newBufferedReader(Paths.get("json/fnames.json"));
+            }
+            // get json data
+            JsonArray firstName = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("data");
+
+            // get last name data
+            reader = Files.newBufferedReader(Paths.get("json/snames.json"));
+            JsonArray lastName = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("data");
+
+            // turn random first name into string
+            JsonElement first = firstName.get(ran.nextInt(firstName.size()));
+            String randomName = gson.fromJson(first, String.class);
+
+            // turn random last name into string
+            JsonElement last = lastName.get(ran.nextInt(lastName.size()));
+            String randomSurname = gson.fromJson(last, String.class);
+
+            // return first & last name
+            return new Person(randomName, randomSurname, gender);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    private void GeneratePerson(Person person){
-        
-    }
-
+    /**
+     * Generates random location from json files provided
+     * @return Event
+     */
     private Event GenerateLocation(){
         try{
             // create random to get random int for event
@@ -188,7 +222,7 @@ public class DataGenerator {
 
     /**
      * Generates random birth year
-     * @return
+     * @return birthYear
      */
     private int GenerateBirthYear(){
         Random ran = new Random();
@@ -198,7 +232,7 @@ public class DataGenerator {
 
     /**
      * Generates random death year
-     * @return
+     * @return deathYear
      */
     private int GenerateDeathYear(int birth){
         Random ran = new Random();
@@ -211,7 +245,7 @@ public class DataGenerator {
 
     /**
      * Generates random marriage year
-     * @return
+     * @return marriageYear
      */
     private int GenerateMarriageYear(int birth, int death){
         Random ran = new Random();

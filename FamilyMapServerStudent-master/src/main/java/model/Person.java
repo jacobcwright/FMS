@@ -108,6 +108,12 @@ public class Person {
         deathYear = 0;
     }
 
+    public Person(String firstName, String lastName, String gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+    }
+
     public String getPersonID() {
         return personID;
     }
