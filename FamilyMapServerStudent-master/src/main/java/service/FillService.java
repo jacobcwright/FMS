@@ -1,9 +1,6 @@
 package service;
 
-import dao.DataAccessException;
-import dao.Database;
-import dao.PersonDAO;
-import dao.UserDAO;
+import dao.*;
 import model.Event;
 import model.Person;
 import request.FillRequest;
@@ -44,13 +41,14 @@ public class FillService {
             ArrayList<Person> people = data.getPeople();
             ArrayList<Event> events = data.getEvents();
 
-            // add people & events to database
+            // add people to database
             for(Person person : people){
-                // add to person database
+                new PersonDAO(db.getConnection()).insert(person);
             }
 
+            // add event to database
             for(Event event : events){
-                // add event to database
+                new EventDAO(db.getConnection()).insert(event);
             }
 
             // return response

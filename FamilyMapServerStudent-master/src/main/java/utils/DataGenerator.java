@@ -29,6 +29,8 @@ public class DataGenerator {
     }
 
     public DataGenerator(int generations) {
+        people = new ArrayList<Person>();
+        events = new ArrayList<Event>();
         this.generations = generations;
         // year at 2003, so each user is 18+
         year = 2003;
@@ -59,18 +61,51 @@ public class DataGenerator {
     }
 
 
-    // Parents must be born at least 13 years before their children.
-    // Parents must be at least 13 years old when they are married.
-    // Parents must not die before their child is born.
-    // Women must not give birth when older than 50 years old.
-    // Birth events must be the first event for a person chronologically.
-    // Death events must be the last event for a person chronologically.
-    // Nobody must die at an age older than 120 years old.
-    // Each person in a married couple has their own marriage event.
-    // Each event will have a unique event ID, but both marriage events must have matching years and locations.
-    // Event locations may be randomly selected, or you may try to make them more realistic
-    public void Generate(Person currentPerson){
+    /**
+     * Parents must be born at least 13 years before their children.
+     * Parents must be at least 13 years old when they are married.
+     * Parents must not die before their child is born.
+     * Women must not give birth when older than 50 years old.
+     * Birth events must be the first event for a person chronologically.
+     * Death events must be the last event for a person chronologically.
+     * Nobody must die at an age older than 120 years old.
+     * Each person in a married couple has their own marriage event.
+     * Each event will have a unique event ID, but both marriage events must have matching years and locations.
+     * Event locations may be randomly selected, or you may try to make them more realistic
+     * @param person current person object
+     */
+    public void Generate(Person person){
+        if(generations == 0){
+            GenerateBirth(person);
+            GenerateDeath(person);
+            return;
+        }
+        // Generate current Person
+        GenerateBirth(person);
+        GenerateDeath(person);
 
+        // go to next generation
+        year -= GENERATION_GAP;
+        generations--;
+
+        // Make Parents
+        Person mother = GeneratePerson(person,"f");
+        Person father = GeneratePerson(person, "m");
+
+        // call Generate on Mother & Father
+        Generate(mother);
+        Generate(father);
+
+        // marry them
+        GenerateMarriage(mother, father);
+
+        // set parent ID's
+        person.setMotherID(mother.getPersonID());
+        person.setFatherID(father.getPersonID());
+
+        // add to family tree
+        people.add(person);
+        return;
     }
 
     /**
@@ -141,9 +176,14 @@ public class DataGenerator {
 
     private void GenerateEvent(Person person){
 
-
     }
 
+    /**
+     * Generate new person object using GeneratePersonName()
+     * @param currentPerson
+     * @param gender
+     * @return
+     */
     private Person GeneratePerson(Person currentPerson, String gender){
         // create Person with name based on gender
         Person newPerson = GeneratePersonName(gender);
@@ -155,6 +195,11 @@ public class DataGenerator {
         return newPerson;
     }
 
+    /**
+     * Generates random name for person based on gender
+     * @param gender
+     * @return
+     */
     private Person GeneratePersonName(String gender){
         Random ran = new Random();
         Gson gson = new Gson();
@@ -178,11 +223,11 @@ public class DataGenerator {
             JsonArray lastName = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("data");
 
             // turn random first name into string
-            JsonElement first = firstName.get(ran.nextInt(firstName.size()));
+            JsonElement first = firstName.get(ran.nextInt(firstName.size()-1));
             String randomName = gson.fromJson(first, String.class);
 
             // turn random last name into string
-            JsonElement last = lastName.get(ran.nextInt(lastName.size()));
+            JsonElement last = lastName.get(ran.nextInt(lastName.size()-1));
             String randomSurname = gson.fromJson(last, String.class);
 
             // return first & last name
@@ -208,7 +253,7 @@ public class DataGenerator {
             JsonArray locations = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("data");
 
             // get random location & instantiate event & return it
-            int ranInt = ran.nextInt(locations.size());
+            int ranInt = ran.nextInt(locations.size()-1);
             JsonElement eventJson = locations.get(ranInt);
             Event event = gson.fromJson(eventJson, Event.class);
             assert(event != null);
@@ -236,7 +281,7 @@ public class DataGenerator {
      */
     private int GenerateDeathYear(int birth){
         Random ran = new Random();
-        int deathYear = birth + ran.nextInt(107) + 13;
+        int deathYear = birth + ran.nextInt(80) + 13;
         if(deathYear >= 2022){
             deathYear = 2022;
         }
