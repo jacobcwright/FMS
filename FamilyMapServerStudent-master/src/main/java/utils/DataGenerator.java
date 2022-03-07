@@ -15,25 +15,25 @@ import java.util.UUID;
 public class DataGenerator {
     ArrayList<Person> people;
     ArrayList<Event> events;
-    int generations;
-    int year;
+//    int generations;
+//    int year;
     static int GENERATION_GAP = 30;
 
 
     public DataGenerator(ArrayList<Person> people, ArrayList<Event> events, int generations) {
         this.people = people;
         this.events = events;
-        this.generations = generations;
-        // year at 2003, so each user is 18+
-        year = 2003;
+//        this.generations = generations;
+//        // year at 2003, so each user is 18+
+//        year = 2003;
     }
 
     public DataGenerator(int generations) {
         people = new ArrayList<Person>();
         events = new ArrayList<Event>();
-        this.generations = generations;
-        // year at 2003, so each user is 18+
-        year = 2003;
+//        this.generations = generations;
+//        // year at 2003, so each user is 18+
+//        year = 2003;
     }
 
     public ArrayList<Person> getPeople() {
@@ -52,21 +52,21 @@ public class DataGenerator {
         this.events = events;
     }
 
-    public int getGenerations() {
-        return generations;
-    }
-
-    public void setGenerations(int generations) {
-        this.generations = generations;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
+//    public int getGenerations() {
+//        return generations;
+//    }
+//
+//    public void setGenerations(int generations) {
+//        this.generations = generations;
+//    }
+//
+//    public int getYear() {
+//        return year;
+//    }
+//
+//    public void setYear(int year) {
+//        this.year = year;
+//    }
 
     /**
      * Parents must be born at least 13 years before their children.
@@ -82,24 +82,23 @@ public class DataGenerator {
      * @param person current person object
      */
     public void Generate(Person person, int generations, int year){
-        this.generations = generations;
-        this.year = year;
         if(generations == 0){
-            GenerateBirth(person);
+            GenerateBirth(person, year);
             GenerateDeath(person);
             people.add(person);
             return;
         }
         // Generate current Person
-        GenerateBirth(person);
+        GenerateBirth(person, year);
         GenerateDeath(person);
-
-        // go to next generation
-        year -= GENERATION_GAP;
 
         // Make Parents
         Person mother = GeneratePerson(person,"f");
         Person father = GeneratePerson(person, "m");
+
+        // set parent ID's
+        person.setMotherID(mother.getPersonID());
+        person.setFatherID(father.getPersonID());
 
         // call Generate on Mother & Father
         Generate(mother, generations-1, year-GENERATION_GAP);
@@ -107,10 +106,6 @@ public class DataGenerator {
 
         // marry them
         GenerateMarriage(mother, father);
-
-        // set parent ID's
-        person.setMotherID(mother.getPersonID());
-        person.setFatherID(father.getPersonID());
 
         // add to family tree
         people.add(person);
@@ -121,7 +116,7 @@ public class DataGenerator {
      * Generates Birth event for person
      * @param person
      */
-    private void GenerateBirth(Person person){
+    private void GenerateBirth(Person person, int year){
         // get location for event
         Event event = GenerateLocation();
         // set eventID
@@ -130,7 +125,7 @@ public class DataGenerator {
         event.setUsername(person.getAssociatedUsername());
         event.setPersonID(person.getPersonID());
         event.setEventType("Birth");
-        event.setYear(GenerateBirthYear());
+        event.setYear(GenerateBirthYear(year));
         person.setBirthYear(event.getYear());
         events.add(event);
     }
@@ -279,7 +274,7 @@ public class DataGenerator {
      * Generates random birth year
      * @return birthYear
      */
-    private int GenerateBirthYear(){
+    private int GenerateBirthYear(int year){
         Random ran = new Random();
         int birthYear = year - ran.nextInt(10);
         return birthYear;

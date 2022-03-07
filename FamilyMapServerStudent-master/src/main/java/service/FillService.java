@@ -35,7 +35,9 @@ public class FillService {
             String personID = new UserDAO(db.getConnection()).getUser(f.getUsername()).getPersonID();
             Person p = new PersonDAO(db.getConnection()).getPerson(personID);
             DataGenerator data = new DataGenerator(f.getGenerations());
-            data.Generate(p, data.getGenerations(), data.getYear());
+
+            // generate data
+            data.Generate(p, f.getGenerations(), 2003); // year as 2003 so each User is 18 or older
 
             // get people & events generated
             ArrayList<Person> people = data.getPeople();
