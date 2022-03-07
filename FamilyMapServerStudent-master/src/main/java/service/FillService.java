@@ -54,6 +54,7 @@ public class FillService {
                 new EventDAO(db.getConnection()).insert(event);
             }
 
+            db.closeConnection(true);
             // return response
             FillResult result = new FillResult(true, "Successfully added " + people.size() +
                     " persons and " + events.size() + " events to the database.");
