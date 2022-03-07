@@ -43,6 +43,9 @@ public class FillService {
 
             // add people to database
             for(Person person : people){
+                if(person.equals(p)){
+                    new PersonDAO(db.getConnection()).deletePerson(p.getPersonID());
+                }
                 new PersonDAO(db.getConnection()).insert(person);
             }
 

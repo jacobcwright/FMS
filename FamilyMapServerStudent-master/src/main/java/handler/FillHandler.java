@@ -55,7 +55,6 @@ public class FillHandler extends BaseHandler {
                     gson.toJson(result, resBody);
                     resBody.close();
                     success = true;
-
                     System.out.println("Fill Success!");
                 }
                 else {

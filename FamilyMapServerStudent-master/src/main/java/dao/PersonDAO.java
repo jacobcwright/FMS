@@ -2,6 +2,7 @@ package dao;
 
 import model.Person;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,8 +51,17 @@ public class PersonDAO {
      * deletes person from person table based on personID
      * @param personID
      */
-    public void deletePerson(String personID){
+    public void deletePerson(String personID) throws DataAccessException {
+        String sql = "DELETE FROM Person WHERE PersonID=?;";
 
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, personID);
+            stmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while deleting from the database");
+        }
     }
 
     /**
