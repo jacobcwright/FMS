@@ -60,6 +60,13 @@ public class DataGenerator {
         this.generations = generations;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
 
     /**
      * Parents must be born at least 13 years before their children.
@@ -74,10 +81,13 @@ public class DataGenerator {
      * Event locations may be randomly selected, or you may try to make them more realistic
      * @param person current person object
      */
-    public void Generate(Person person){
+    public void Generate(Person person, int generations, int year){
+        this.generations = generations;
+        this.year = year;
         if(generations == 0){
             GenerateBirth(person);
             GenerateDeath(person);
+            people.add(person);
             return;
         }
         // Generate current Person
@@ -86,15 +96,14 @@ public class DataGenerator {
 
         // go to next generation
         year -= GENERATION_GAP;
-        generations--;
 
         // Make Parents
         Person mother = GeneratePerson(person,"f");
         Person father = GeneratePerson(person, "m");
 
         // call Generate on Mother & Father
-        Generate(mother);
-        Generate(father);
+        Generate(mother, generations-1, year-GENERATION_GAP);
+        Generate(father,  generations-1, year-GENERATION_GAP);
 
         // marry them
         GenerateMarriage(mother, father);
@@ -203,18 +212,19 @@ public class DataGenerator {
     private Person GeneratePersonName(String gender){
         Random ran = new Random();
         Gson gson = new Gson();
-        Reader reader;
+        Reader reader = null;
         try {
             // if male
-            if(gender == "m"){
+            if(gender.equals("m")){
                 // get male first names
                 reader = Files.newBufferedReader(Paths.get("json/mnames.json"));
             }
             // female
-            else{
+            else if(gender.equals("f")){
                 // get female first names
                 reader = Files.newBufferedReader(Paths.get("json/fnames.json"));
             }
+            assert(reader != null);
             // get json data
             JsonArray firstName = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("data");
 
