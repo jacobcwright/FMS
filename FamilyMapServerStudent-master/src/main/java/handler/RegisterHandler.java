@@ -43,7 +43,10 @@ public class RegisterHandler extends BaseHandler {
                 String reqData = StreamToString(inputBody);
 
                 System.out.println(reqData);
-
+                if(reqData.isEmpty()){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    exchange.getResponseBody().close();
+                }
                 // parse req body from json
                 RegisterRequest request = gson.fromJson(reqData, RegisterRequest.class);
 
