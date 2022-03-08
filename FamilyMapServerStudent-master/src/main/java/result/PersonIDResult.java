@@ -1,5 +1,7 @@
 package result;
 
+import model.Person;
+
 /**
  * Person ID Result
  */
@@ -65,6 +67,23 @@ public class PersonIDResult extends Response{
         this.fatherID = fatherID;
         this.motherID = motherID;
         this.spouseID = spouseID;
+        this.success = true;
+    }
+
+    public PersonIDResult(boolean b, String m) {
+        this.success = b;
+        this.message = m;
+    }
+
+    public PersonIDResult(Person found) {
+        this.associatedUsername = found.getAssociatedUsername();
+        this.personID = found.getPersonID();
+        this.firstName = found.getFirstName();
+        this.lastName = found.getLastName();
+        this.gender = found.getGender();
+        this.fatherID = found.getFatherID();
+        this.motherID = found.getMotherID();
+        this.spouseID = found.getSpouseID();
         this.success = true;
     }
 }

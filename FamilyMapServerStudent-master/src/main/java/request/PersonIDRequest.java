@@ -10,11 +10,17 @@ public class PersonIDRequest {
     String personID;
 
     /**
+     * Authtoken from header
+     */
+    String authtoken;
+
+    /**
      * Constructor for person ID
      * @param personID
      */
-    public PersonIDRequest(String personID) {
+    public PersonIDRequest(String personID, String authtoken) {
         this.personID = personID;
+        this.authtoken = authtoken;
     }
 
     public String getPersonID() {
@@ -23,5 +29,9 @@ public class PersonIDRequest {
 
     public void setPersonID(String personID) {
         this.personID = personID;
+    }
+
+    public String getAuthtoken() {
+        return authtoken;
     }
 }
