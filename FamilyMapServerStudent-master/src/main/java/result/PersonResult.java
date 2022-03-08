@@ -22,6 +22,11 @@ public class PersonResult extends Response{
         this.success = true;
     }
 
+    public PersonResult(boolean b, String s) {
+        success = b;
+        message = s;
+    }
+
     public ArrayList<Person> getPersons() {
         return persons;
     }

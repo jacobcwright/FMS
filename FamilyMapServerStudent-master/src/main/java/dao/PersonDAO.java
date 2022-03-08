@@ -1,5 +1,6 @@
 package dao;
 
+import model.Event;
 import model.Person;
 
 import javax.xml.crypto.Data;
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Data access object for Person Model Objects
@@ -159,4 +161,38 @@ public class PersonDAO {
         return null;
     }
 
+    /**
+     * Gets array of Person objects of people associated with User
+     * @param username of user
+     * @return array of person objects
+     * @throws DataAccessException
+     */
+    public ArrayList<Person> getPeople(String username) throws DataAccessException {
+        Person p;
+        ArrayList<Person> people = new ArrayList<>();
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Person WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                p = new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                        rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID"));
+                people.add(p);
+            }
+            return people;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new DataAccessException("Error encountered while finding events");
+        } finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
 }
