@@ -56,6 +56,22 @@ public class EventDAO {
     }
 
     /**
+     * deletes event from Event table based on associated username
+     * @param username
+     */
+    public void deleteEventsFromUser(String username) throws DataAccessException {
+        String sql = "DELETE FROM Events WHERE associatedUsername=?;";
+
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while deleting from the database");
+        }
+    }
+    /**
      * finds event in event table based on eventID
      * @param eventID
      * @return

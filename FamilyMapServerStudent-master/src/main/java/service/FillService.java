@@ -34,6 +34,8 @@ public class FillService {
             // create DataGenerator Object for User
             String personID = new UserDAO(db.getConnection()).getUser(f.getUsername()).getPersonID();
             Person p = new PersonDAO(db.getConnection()).getPerson(personID);
+            new PersonDAO(db.getConnection()).deletePeopleFromUser(f.getUsername());
+            new EventDAO(db.getConnection()).deleteEventsFromUser(f.getUsername());
             DataGenerator data = new DataGenerator(f.getGenerations());
 
             // generate data

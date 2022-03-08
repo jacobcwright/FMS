@@ -65,6 +65,23 @@ public class PersonDAO {
     }
 
     /**
+     * deletes people from person table based on associated username
+     * @param username
+     */
+    public void deletePeopleFromUser(String username) throws DataAccessException {
+        String sql = "DELETE FROM Person WHERE associatedUsername=?;";
+
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while deleting from the database");
+        }
+    }
+
+    /**
      * inserts person into Person table
      * @param person
      * @throws DataAccessException
