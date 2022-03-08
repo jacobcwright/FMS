@@ -66,14 +66,15 @@ public class EventIDResult extends Response{
     public EventIDResult(Boolean success, String associatedUsername, String eventID, String personID, float latitude, float longitude,
                          String country, String city, String eventType, int year) {
         this.associatedUsername = associatedUsername;
-            this.eventID = eventID;
-            this.personID = personID;
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.country = country;
-            this.city = city;
-            this.eventType = eventType;
-            this.year = year;
+        this.eventID = eventID;
+        this.personID = personID;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.country = country;
+        this.city = city;
+        this.eventType = eventType;
+        this.year = year;
+        this.success = true;
     }
 
     public EventIDResult(Event e){
@@ -86,6 +87,7 @@ public class EventIDResult extends Response{
         this.city = e.getCity();
         this.eventType = e.getEventType();
         this.year = e.getYear();
+        success = true;
     }
 
     public EventIDResult(boolean b, String message) {

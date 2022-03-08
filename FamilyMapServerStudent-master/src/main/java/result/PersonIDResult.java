@@ -65,5 +65,6 @@ public class PersonIDResult extends Response{
         this.fatherID = fatherID;
         this.motherID = motherID;
         this.spouseID = spouseID;
+        this.success = true;
     }
 }

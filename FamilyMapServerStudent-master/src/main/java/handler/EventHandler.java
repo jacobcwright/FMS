@@ -3,12 +3,10 @@ package handler;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import dao.DataAccessException;
 import request.EventRequest;
 import result.EventResult;
 import service.EventService;
-
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
