@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Event Data Access Object for Event model
@@ -127,4 +128,42 @@ public class EventDAO {
             throw new DataAccessException("Error encountered while clearing database");
         }
     }
+
+
+    /**
+     * gets events from Event table for user
+     * @param user
+     * @return
+     * @throws DataAccessException
+     */
+    public ArrayList<Event> getEvents(String user) throws DataAccessException {
+        Event e;
+        ArrayList<Event> events = new ArrayList<>();
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Events WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, user);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                e = new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"),
+                        rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"),
+                        rs.getString("Country"), rs.getString("City"), rs.getString("EventType"),
+                        rs.getInt("Year"));
+                 events.add(e);
+            }
+            return events;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new DataAccessException("Error encountered while finding events");
+        } finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

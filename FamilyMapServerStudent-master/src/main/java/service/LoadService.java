@@ -22,6 +22,7 @@ public class LoadService {
         Database db = new Database();
 
         try{
+            // open connection to db
             db.openConnection();
             // clear database
             new UserDAO(db.getConnection()).clear();
@@ -39,10 +40,11 @@ public class LoadService {
                 new EventDAO(db.getConnection()).insert(e);
             }
 
+            // commit db changes
             db.closeConnection(true);
 
-            LoadResult result = new LoadResult(true, "Successfully added " + l.getUsers().length + " users, " +
-                    l.getPersons().length + " persons, and " + l.getEvents().length + " events to the database.");
+            // make & return result object
+            LoadResult result = new LoadResult(true, "Successfully added " + l.getUsers().length + " users, " + l.getPersons().length + " persons, and " + l.getEvents().length + " events to the database.");
             return result;
 
         } catch (DataAccessException e) {

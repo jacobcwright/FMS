@@ -44,13 +44,13 @@ public class EventIDService extends AuthtokenChecker{
         } catch (DataAccessException ex) {
             ex.printStackTrace();
             db.closeConnection(false);
-            EventIDResult result = new EventIDResult(false, ex.getMessage());
+            EventIDResult result = new EventIDResult(false, "Error: " + ex.getMessage());
             return result;
         }
         catch (IOException ex) {
             ex.printStackTrace();
             db.closeConnection(false);
-            EventIDResult result = new EventIDResult(false, ex.getMessage());
+            EventIDResult result = new EventIDResult(false, "Error: " + ex.getMessage());
             return result;
         }
     }
