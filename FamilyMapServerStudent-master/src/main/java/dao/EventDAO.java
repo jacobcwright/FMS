@@ -145,10 +145,10 @@ public class EventDAO {
             stmt.setString(1, user);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                e = new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"),
-                        rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"),
-                        rs.getString("Country"), rs.getString("City"), rs.getString("EventType"),
-                        rs.getInt("Year"));
+                e = new Event(rs.getString("associatedUsername"), rs.getString("eventID"),
+                        rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
+                        rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
+                        rs.getInt("year"));
                  events.add(e);
             }
             return events;

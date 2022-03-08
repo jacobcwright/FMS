@@ -562,7 +562,7 @@ public class ServerTest {
      * All Event
      * Fill
      */
-    //@Test
+    @Test
     @DisplayName("Realistic Fill Birth Test")
     public void testRealisticBirthEvents(TestInfo testInfo) {
         printTestName(testInfo);
@@ -591,7 +591,7 @@ public class ServerTest {
      * All Event
      * Fill
      */
-    //@Test
+    @Test
     @DisplayName("Realistic Fill Death Test")
     public void testRealisticDeathEvents(TestInfo testInfo) {
         printTestName(testInfo);
@@ -875,7 +875,7 @@ public class ServerTest {
      * All Event
      * All Person
      */
-    //@Test
+    @Test
     @DisplayName("Load Valid Info Test")
     public void testValidLoadInfo(TestInfo testInfo) {
         printTestName(testInfo);
@@ -920,7 +920,7 @@ public class ServerTest {
      * All Event
      * All Person
      */
-    //@Test
+    @Test
     @DisplayName("Persistence Test")
     public void testPersistence(TestInfo testInfo) {
         printTestName(testInfo);
