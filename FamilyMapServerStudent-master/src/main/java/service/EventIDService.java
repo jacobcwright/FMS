@@ -38,6 +38,11 @@ public class EventIDService extends AuthtokenChecker{
                 throw new IOException("Invalid eventID provided");
             }
 
+            // if person is not associated with user
+            if(!found.getUsername().equals(authtoken.getUsername())){
+                throw new IOException("Invalid User provided");
+            }
+
             db.closeConnection(true);
             return new EventIDResult(found);
 

@@ -43,6 +43,16 @@ public class EventIDHandler extends BaseHandler{
                     EventIDService service = new EventIDService();
                     EventIDResult result = service.eventID(req);
 
+                    // check Result
+                    if(!result.getSuccess()){
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                        Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                        gson.toJson(result, resBody);
+                        resBody.close();
+                        exchange.getResponseBody().close();
+                        return;
+                    }
+
                     if (result != null) {
                         // send response
                         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

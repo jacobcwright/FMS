@@ -158,13 +158,17 @@ public class DataGenerator {
         husband.setSpouseID(wife.getPersonID());
         wife.setSpouseID(husband.getPersonID());
 
+        // get latest birth & earliest death for year calculations
+        int latestBirth = wife.getBirthYear() >= husband.getBirthYear() ? wife.getBirthYear() : husband.getBirthYear();
+        int earliestDeath = wife.getDeathYear() <= husband.getDeathYear() ? wife.getDeathYear() : husband.getDeathYear();
+
         // create marriage event for wife
         Event wifeMarriage = GenerateLocation();
         wifeMarriage.setEventID(UUID.randomUUID().toString());
         wifeMarriage.setUsername(wife.getAssociatedUsername());
         wifeMarriage.setPersonID(wife.getPersonID());
         wifeMarriage.setEventType("Marriage");
-        wifeMarriage.setYear(GenerateMarriageYear(wife.getBirthYear(), wife.getDeathYear()));
+        wifeMarriage.setYear(GenerateMarriageYear(latestBirth, earliestDeath));
         events.add(wifeMarriage);
 
         // create marriage event for husband
@@ -176,10 +180,6 @@ public class DataGenerator {
         husbandMarriage.setEventType("Marriage");
         husbandMarriage.setYear(wifeMarriage.getYear());
         events.add(husbandMarriage);
-    }
-
-    private void GenerateEvent(Person person){
-
     }
 
     /**
@@ -305,6 +305,9 @@ public class DataGenerator {
         }
         if(marriage > death){
             marriage = death - 1;
+        }
+        if(marriage - birth < 13){
+            marriage = birth + 14;
         }
         return marriage;
     }

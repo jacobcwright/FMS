@@ -31,6 +31,7 @@ public class FillService {
         try {
             db.openConnection();
 
+
             // create DataGenerator Object for User
             String personID = new UserDAO(db.getConnection()).getUser(f.getUsername()).getPersonID();
             Person p = new PersonDAO(db.getConnection()).getPerson(personID);

@@ -41,6 +41,11 @@ public class PersonIDService extends AuthtokenChecker{
                 throw new IOException("Invalid personID provided");
             }
 
+            // if person is not associated with user
+            if(!found.getAssociatedUsername().equals(authtoken.getUsername())){
+                throw new IOException("Invalid User provided");
+            }
+
             // return results
             db.closeConnection(true);
             return new PersonIDResult(found);

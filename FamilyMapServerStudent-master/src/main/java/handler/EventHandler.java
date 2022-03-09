@@ -32,6 +32,16 @@ public class EventHandler extends BaseHandler {
                 EventService service = new EventService();
                 EventResult result = service.event(req);
 
+                // check Result
+                if(!result.getSuccess()){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                    gson.toJson(result, resBody);
+                    resBody.close();
+                    exchange.getResponseBody().close();
+                    return;
+                }
+
                 // send response
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());

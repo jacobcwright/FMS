@@ -39,6 +39,16 @@ public class PersonIDHandler extends BaseHandler{
                 PersonIDService service = new PersonIDService();
                 PersonIDResult result = service.personID(request);
 
+                // check Result
+                if(!result.getSuccess()){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                    gson.toJson(result, resBody);
+                    resBody.close();
+                    exchange.getResponseBody().close();
+                    return;
+                }
+
                 if (result != null) {
                     // send response
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -47,7 +57,7 @@ public class PersonIDHandler extends BaseHandler{
                     resBody.close();
                     success = true;
 
-                    System.out.println("EventID Success!");
+                    System.out.println("PersonID Success!");
                 }
                 return;
             }
