@@ -5,10 +5,13 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.DataAccessException;
+import request.FillRequest;
 import request.LoginRequest;
 import request.RegisterRequest;
+import result.FillResult;
 import result.LoginResult;
 import result.RegisterResult;
+import service.FillService;
 import service.LoginService;
 import service.RegisterService;
 
@@ -55,6 +58,21 @@ public class RegisterHandler extends BaseHandler {
                 RegisterService service = new RegisterService();
                 RegisterResult result = service.register(request);
 
+                // check if result failed
+                if(!result.getSuccess() | result == null){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                    gson.toJson(result, resBody);
+                    resBody.close();
+                    exchange.getResponseBody().close();
+                    return;
+                }
+
+                // fill User
+                FillRequest fillReq = new FillRequest(request.getUsername(), 4);
+                FillService fill = new FillService();
+                FillResult fillResult = fill.fill(fillReq);
+
                 // send response
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
@@ -70,7 +88,7 @@ public class RegisterHandler extends BaseHandler {
                 exchange.getResponseBody().close();
             }
 
-        } catch(Exception e){
+        } catch(IOException | DataAccessException e){
             System.out.println("in catch statement");
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();

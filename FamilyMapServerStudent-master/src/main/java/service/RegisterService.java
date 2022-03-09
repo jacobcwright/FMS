@@ -32,9 +32,18 @@ public class RegisterService {
             // open Database
             db.openConnection();
 
+
             // create User
             User u = new User(r.getUsername(), r.getPassword(), r.getEmail(), r.getFirstName(), r.getLastName(),
                     r.getGender(), UUID.randomUUID().toString());
+
+            // check if user is already in DB
+            User found = new UserDAO(db.getConnection()).getUser(u.getUsername());
+            if(found != null){
+                db.closeConnection(false);
+                RegisterResult result = new RegisterResult(false, "Error: User already registered");
+                return result;
+            }
 
             // Add user to database
             new UserDAO(db.getConnection()).insert(u);
@@ -59,8 +68,8 @@ public class RegisterService {
         } catch(DataAccessException e){
             e.printStackTrace();
             db.closeConnection(false);
-            Response result = new Response(false, "Error");
+            RegisterResult result = new RegisterResult(false, "Error");
+            return result;
         }
-        return null;
     }
 }

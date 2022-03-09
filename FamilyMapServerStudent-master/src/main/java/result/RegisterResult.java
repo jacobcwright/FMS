@@ -32,6 +32,11 @@ public class RegisterResult extends Response{
         this.success = true;
     }
 
+    public RegisterResult(boolean b, String m) {
+        success = b;
+        message = m;
+    }
+
     public String getAuthtoken() {
         return authtoken;
     }

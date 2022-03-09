@@ -24,6 +24,14 @@ public class FileHandler extends BaseHandler {
                 }
                 System.out.println("File Path is: " + filePathStr);
                 Path filePath = FileSystems.getDefault().getPath(filePathStr);
+                if(!Files.exists(filePath)){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND, 0);
+                    OutputStream respBody = exchange.getResponseBody();
+                    filePath = FileSystems.getDefault().getPath("web/HTML/404.html");
+                    Files.copy(filePath, respBody);
+                    respBody.close();
+                    return;
+                }
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream respBody = exchange.getResponseBody();
                 Files.copy(filePath, respBody);
