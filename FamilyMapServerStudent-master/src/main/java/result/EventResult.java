@@ -11,14 +11,14 @@ public class EventResult extends Response{
     /**
      * Array of event objects
      */
-    ArrayList<Event> events;
+    ArrayList<Event> data;
 
     /**
      * Constructor assuming success
      * @param e
      */
     public EventResult(ArrayList<Event> e){
-        events = e;
+        data = e;
         success = true;
     }
 
@@ -28,10 +28,10 @@ public class EventResult extends Response{
     }
 
     public ArrayList<Event> getEvents() {
-        return events;
+        return data;
     }
 
     public void setEvents(ArrayList<Event> events) {
-        this.events = events;
+        this.data = events;
     }
 }

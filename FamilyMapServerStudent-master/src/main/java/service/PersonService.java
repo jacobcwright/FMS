@@ -33,6 +33,11 @@ public class PersonService extends AuthtokenChecker{
             }
             // get array of people and return it
             ArrayList<Person> people = new PersonDAO(db.getConnection()).getPeople(authtoken.getUsername());
+            if(people.isEmpty()){
+                db.closeConnection(false);
+                PersonResult result = new PersonResult(false, "Error: no people found");
+                return result;
+            }
             db.closeConnection(true);
             return new PersonResult(people);
         } catch (DataAccessException e) {

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,5 +87,73 @@ public class EventDAOTest {
         Event found = eDao.find(bestEvent.getEventID());
 
         assertNull(found);
+    }
+
+    @Test
+    public void deleteEventsTest() throws DataAccessException{
+        // add event
+        eDao.insert(bestEvent);
+
+        // delete that event by user
+        eDao.deleteEventsFromUser(bestEvent.getUsername());
+
+        //check if deleted
+        Event found = eDao.find(bestEvent.getEventID());
+
+        assertNull(found);
+    }
+
+    @Test
+    public void deleteEventsFailTest() throws DataAccessException{
+        Event found = eDao.find(bestEvent.getEventID());
+
+        assertNull(found);
+
+        // delete event by user that doesn't exist yet
+        eDao.deleteEventsFromUser(bestEvent.getUsername());
+
+        //check if deleted
+        found = eDao.find(bestEvent.getEventID());
+
+        assertNull(found);
+    }
+
+    @Test
+    public void findTest() throws DataAccessException{
+        // add event
+        eDao.insert(bestEvent);
+
+        // find event
+        Event found = eDao.find(bestEvent.getEventID());
+
+        // compare events
+        assertEquals(bestEvent, found);
+    }
+
+    @Test
+    public void findFailTest() throws DataAccessException{
+        // search for non-existent event
+        Event found = eDao.find(bestEvent.getEventID());
+        // ensure no event was found
+        assertNull(found);
+    }
+
+    @Test
+    public void getEventsTest() throws DataAccessException{
+        eDao.insert(bestEvent);
+
+        ArrayList<Event> events = new ArrayList<>();
+        events.add(bestEvent);
+
+        ArrayList<Event> found = eDao.getEvents(bestEvent.getUsername());
+
+        assertEquals(events.size(), found.size());
+        assertTrue(events.get(0).equals(found.get(0)));
+    }
+
+    @Test
+    public void getEventsFailTest() throws DataAccessException{
+        ArrayList<Event> found = eDao.getEvents(bestEvent.getUsername());
+        assertTrue(found.isEmpty());
     }
 }

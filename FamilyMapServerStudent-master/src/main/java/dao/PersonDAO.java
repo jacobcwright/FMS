@@ -176,7 +176,7 @@ public class PersonDAO {
             stmt.setString(1, username);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                p = new Person(rs.getString("associatedUsername"), rs.getString("personID"),
+                p = new Person(rs.getString("personID"), rs.getString("associatedUsername"),
                         rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
                         rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID"));
                 people.add(p);

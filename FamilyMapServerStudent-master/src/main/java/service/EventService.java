@@ -27,7 +27,7 @@ public class EventService extends AuthtokenChecker{
     public EventResult event(EventRequest req) throws DataAccessException {
         Database db = new Database();
         try{
-            db.openConnection();
+            db.getConnection();
 
             // check if authtoken is associated with user
             Authtoken authtoken = this.getUser(req.getAuthToken(), db.getConnection());

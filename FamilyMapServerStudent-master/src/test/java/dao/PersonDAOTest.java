@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.xml.crypto.Data;
+import java.sql.Array;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,15 +83,6 @@ public class PersonDAOTest {
         assertNull(found);
     }
 
-//    @Test
-//    public void retrieveFail() throws DataAccessException {
-//        // insert person
-//        pDAO.insert(person);
-//
-//        // attempt getPerson with no existing personID
-//        assertThrows(DataAccessException.class, () -> pDAO.getPerson("This should fail"));
-//    }
-
     @Test
     public void clearTest() throws DataAccessException {
         // insert person
@@ -102,6 +95,60 @@ public class PersonDAOTest {
         Person found = pDAO.getPerson(person.getPersonID());
 
         assertNull(found);
+    }
+
+    @Test
+    public void getPeopleTest() throws DataAccessException{
+        ArrayList<Person> people = new ArrayList<>();
+        people.add(person);
+        pDAO.insert(person);
+        person = new Person("Rachel","jsmith","Rachel","Smith","f","","","");
+        pDAO.insert(person);
+        people.add(person);
+
+        ArrayList<Person> found = pDAO.getPeople("jsmith");
+        assertNotNull(found);
+
+        assertEquals(people.size(), found.size());
+    }
+
+    @Test
+    public void getPeopleNoUserTest() throws DataAccessException{
+        pDAO.insert(person);
+        ArrayList<Person> found = pDAO.getPeople("failure!");
+
+        assertTrue(found.isEmpty());
+    }
+
+    @Test
+    public void deletePersonTest() throws DataAccessException{
+        pDAO.insert(person);
+        pDAO.deletePerson(person.getPersonID());
+        Person found = pDAO.getPerson(person.getPersonID());
+
+        assertNull(found);
+    }
+
+    @Test
+    public void deletePersonFailTest() throws DataAccessException{
+        assertNull(pDAO.getPerson("failure"));
+        pDAO.deletePerson("failure");
+        assertNull(pDAO.getPerson("failure"));
+    }
+
+    @Test
+    public void deletePeopleTest() throws DataAccessException{
+        pDAO.insert(person);
+        assertEquals(person, pDAO.getPerson(person.getPersonID()));
+        pDAO.deletePeopleFromUser(person.getAssociatedUsername());
+        assertTrue(pDAO.getPeople(person.getAssociatedUsername()).isEmpty());
+    }
+
+    @Test
+    public void deletePeopleFailTest() throws DataAccessException{
+        assertTrue(pDAO.getPeople("failure").isEmpty());
+        pDAO.deletePeopleFromUser("failure");
+        assertTrue(pDAO.getPeople("failure").isEmpty());
     }
 
 }

@@ -11,14 +11,14 @@ public class PersonResult extends Response{
     /**
      * Array of person objects
      */
-    ArrayList<Person> persons;
+    ArrayList<Person> data;
 
     /**
      * constructor based on success
      * @param persons
      */
     public PersonResult(ArrayList<Person> persons) {
-        this.persons = persons;
+        this.data = persons;
         this.success = true;
     }
 
@@ -28,10 +28,10 @@ public class PersonResult extends Response{
     }
 
     public ArrayList<Person> getPersons() {
-        return persons;
+        return data;
     }
 
     public void setPersons(ArrayList<Person> persons) {
-        this.persons = persons;
+        this.data = persons;
     }
 }
