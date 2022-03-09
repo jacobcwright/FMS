@@ -28,8 +28,12 @@ public class LoginService {
     public LoginResult login(LoginRequest l) throws DataAccessException {
         Database db = new Database();
         try {
-            db.openConnection();
             User u = new UserDAO(db.getConnection()).getUser(l.getUsername());
+            if(u == null){
+                db.closeConnection(false);
+                LoginResult result = new LoginResult(false, "Username or password was incorrect");
+                return result;
+            }
             if(u.getPassword().equals(l.getPassword())){
                 // generate authtoken
                 String token = UUID.randomUUID().toString();
@@ -45,18 +49,14 @@ public class LoginService {
             // password is incorrect
             else {
                 db.closeConnection(false);
-                Response result = new Response(false, "Username or password was incorrect");
+                LoginResult result = new LoginResult(false, "Username or password was incorrect");
+                return result;
             }
-
-
         } catch(DataAccessException e){
             e.printStackTrace();
             db.closeConnection(false);
-            Response result = new Response(false, "Error");
-
+            LoginResult result = new LoginResult(false, "Username or password was incorrect");
+            return result;
         }
-
-
-        return null;
     }
 }

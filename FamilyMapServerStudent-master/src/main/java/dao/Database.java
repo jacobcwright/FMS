@@ -62,6 +62,7 @@ public class Database {
     //OR PROBLEMS YOU ENCOUNTER
     public void closeConnection(boolean commit) throws DataAccessException {
         try {
+            if(conn == null) return;
             if (commit) {
                 //This will commit the changes to the database
                 conn.commit();
@@ -70,7 +71,6 @@ public class Database {
                 //will rollback any changes we made during this connection
                 conn.rollback();
             }
-
             conn.close();
             conn = null;
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class Database {
     }
 
     /**
-     * clears all ables
+     * clears all Tables
      * @throws DataAccessException
      */
     public void clearTables() throws DataAccessException {

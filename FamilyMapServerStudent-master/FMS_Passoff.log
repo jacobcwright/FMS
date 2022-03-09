@@ -298,3 +298,5 @@
 [Tue Mar 08 17:59:02 MST 2022] - INFO client.Client: 	Response code 200 returned
 [Tue Mar 08 17:59:02 MST 2022] - INFO client.Client: 	Getting input stream from server
 [Tue Mar 08 17:59:02 MST 2022] - INFO client.Client: 	Reading input stream into a string
+[Tue Mar 08 18:04:48 MST 2022] - INFO passoff.ServerTest: 	Running Load Valid Info Test...
+[Tue Mar 08 18:04:48 MST 2022] - INFO client.Proxy: 	Load called

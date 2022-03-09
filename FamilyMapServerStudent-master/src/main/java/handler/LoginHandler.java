@@ -46,6 +46,11 @@ public class LoginHandler extends BaseHandler {
                 // make login service & login
                 LoginService service = new LoginService();
                 LoginResult result = service.login(request);
+                if(!result.getSuccess()){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    exchange.getResponseBody().close();
+                    return;
+                }
 
                 // send response
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -58,6 +63,7 @@ public class LoginHandler extends BaseHandler {
             if(!success){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();
+                return;
             }
             // error handling
         } catch(IOException ioe){
