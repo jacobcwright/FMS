@@ -37,6 +37,16 @@ public class PersonHandler extends BaseHandler {
                 PersonService service = new PersonService();
                 PersonResult result = service.person(req);
 
+                // check Result
+                if(result.getSuccess()){
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                    gson.toJson(result, resBody);
+                    resBody.close();
+                    exchange.getResponseBody().close();
+                    return;
+                }
+
                 // send response
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
