@@ -46,8 +46,11 @@ public class LoginHandler extends BaseHandler {
                 // make login service & login
                 LoginService service = new LoginService();
                 LoginResult result = service.login(request);
-                if(!result.getSuccess()){
+                if(!result.getSuccess() | result == null){
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                    gson.toJson(result, resBody);
+                    resBody.close();
                     exchange.getResponseBody().close();
                     return;
                 }
