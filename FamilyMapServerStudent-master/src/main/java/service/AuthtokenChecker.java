@@ -12,17 +12,6 @@ import java.sql.Connection;
  * to check authtoken and return boolean success or authtokens
  */
 public class AuthtokenChecker {
-//    /**
-//     * check authtoken
-//     * @param a
-//     * @param conn
-//     * @return
-//     * @throws DataAccessException
-//     */
-////    public boolean checkAuthtoken(Authtoken a, Connection conn) throws DataAccessException {
-////        return (new AuthtokenDAO(conn).get(a.getAuthtoken()).equals(a));
-////    }
-
     /**
      * get authtoken object based on authtoken string
      * @param authtoken
