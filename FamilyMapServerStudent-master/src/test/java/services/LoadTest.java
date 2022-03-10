@@ -43,6 +43,7 @@ public class LoadTest {
             LoadResult result = service.load(req);
             assertTrue(result.getSuccess());
             assertEquals("Successfully added 2 users, 11 persons, and 19 events to the database.", result.getMessage());
+            db.closeConnection(true);
         } catch (DataAccessException | IOException e) {
             e.printStackTrace();
             db.closeConnection(false);

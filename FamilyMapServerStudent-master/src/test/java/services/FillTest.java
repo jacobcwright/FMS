@@ -50,6 +50,7 @@ public class FillTest {
             assertEquals(expected, result.getMessage());
             assertEquals(31, new PersonDAO(db.getConnection()).getPeople("test1").size());
             assertEquals(92, new EventDAO(db.getConnection()).getEvents("test1").size());
+            db.closeConnection(true);
         } catch (DataAccessException e) {
             e.printStackTrace();
             db.closeConnection(false);

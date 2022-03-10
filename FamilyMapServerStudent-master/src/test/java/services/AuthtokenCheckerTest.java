@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import request.RegisterRequest;
 import result.RegisterResult;
 import service.AuthtokenChecker;
+import service.ClearService;
 import service.RegisterService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,12 +31,23 @@ public class AuthtokenCheckerTest {
     @Test
     public void validAuthtokenTest() throws DataAccessException {
         Database db = new Database();
-        RegisterRequest req = new RegisterRequest("test1", "password", "gmail",
-                "jacob", "wright", "m");
-        RegisterService service = new RegisterService();
-        RegisterResult result = service.register(req);
-        String auth = result.getAuthtoken();
-        assertEquals("test1", new AuthtokenChecker().getUser(auth, db.getConnection()).getUsername());
+        try {
+            new ClearService().clear();
+            db.closeConnection(true);
+            RegisterRequest req = new RegisterRequest("test1", "password", "gmail",
+                    "jacob", "wright", "m");
+            RegisterService service = new RegisterService();
+            RegisterResult result = service.register(req);
+            db.closeConnection(true);
+            String auth = result.getAuthtoken();
+            Authtoken a = new AuthtokenChecker().getUser(auth, db.getConnection());
+            assertNotNull(a);
+            assertEquals("test1", a.getUsername());
+            db.closeConnection(true);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            db.closeConnection(false);
+        }
     }
 
     @Test
@@ -48,6 +60,7 @@ public class AuthtokenCheckerTest {
         String wrongAuth = result.getAuthtoken() + "wrong";
         Authtoken authtoken = new AuthtokenChecker().getUser(wrongAuth, db.getConnection());
         assertNull(authtoken);
+        db.closeConnection(true);
     }
 
 }
