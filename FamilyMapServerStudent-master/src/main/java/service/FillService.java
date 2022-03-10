@@ -3,11 +3,13 @@ package service;
 import dao.*;
 import model.Event;
 import model.Person;
+import model.User;
 import request.FillRequest;
 import result.FillResult;
 import result.Response;
 import utils.DataGenerator;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -33,7 +35,11 @@ public class FillService {
 
 
             // create DataGenerator Object for User
-            String personID = new UserDAO(db.getConnection()).getUser(f.getUsername()).getPersonID();
+            User u = new UserDAO(db.getConnection()).getUser(f.getUsername());
+            if(u == null){
+                throw new IOException("Invalid username");
+            }
+            String personID = u.getPersonID();
             Person p = new PersonDAO(db.getConnection()).getPerson(personID);
             new PersonDAO(db.getConnection()).deletePeopleFromUser(f.getUsername());
             new EventDAO(db.getConnection()).deleteEventsFromUser(f.getUsername());
@@ -64,10 +70,10 @@ public class FillService {
             FillResult result = new FillResult(true, "Successfully added " + people.size() +
                     " persons and " + events.size() + " events to the database.");
             return result;
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | IOException e) {
             e.printStackTrace();
             db.closeConnection(false);
-            FillResult result = new FillResult(false, "Error" + e.getMessage());
+            FillResult result = new FillResult(false, "Error " + e.getMessage());
             return result;
         }
     }
