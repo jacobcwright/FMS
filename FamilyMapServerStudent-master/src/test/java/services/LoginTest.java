@@ -40,21 +40,6 @@ public class LoginTest {
 
     }
 
-    //@AfterEach
-    public void tearDown() throws DataAccessException {
-        // new Database connection
-        Database db = new Database();
-        // clear User table
-        try {
-            new UserDAO(db.getConnection()).clear();
-            db.closeConnection(true);
-        }
-        catch (DataAccessException e){
-            e.printStackTrace();
-            db.closeConnection(false);
-        }
-    }
-
     @Test
     public void loginTest() throws DataAccessException {
         LoginRequest req = new LoginRequest("Username123", "StupidPassword");

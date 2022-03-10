@@ -65,4 +65,6 @@ public class RegisterResult extends Response{
     public void setPersonID(String personID) {
         this.personID = personID;
     }
+
+
 }

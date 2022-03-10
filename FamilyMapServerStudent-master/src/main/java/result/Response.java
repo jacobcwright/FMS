@@ -29,4 +29,12 @@ public class Response {
     public Boolean getSuccess() {
         return success;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
