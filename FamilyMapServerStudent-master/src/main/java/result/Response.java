@@ -16,6 +16,11 @@ public class Response {
 
     public Response() {}
 
+    /**
+     * base constructor to be used for failures
+     * @param success
+     * @param message
+     */
     public Response(Boolean success, String message) {
         this.success = success;
         this.message = message;

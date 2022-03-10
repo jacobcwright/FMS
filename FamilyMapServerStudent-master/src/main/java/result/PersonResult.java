@@ -22,6 +22,11 @@ public class PersonResult extends Response{
         this.success = true;
     }
 
+    /**
+     * constructor for failed
+     * @param b
+     * @param s
+     */
     public PersonResult(boolean b, String s) {
         success = b;
         message = s;

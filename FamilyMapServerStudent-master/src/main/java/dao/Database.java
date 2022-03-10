@@ -78,29 +78,5 @@ public class Database {
             throw new DataAccessException("Unable to close database connection");
         }
     }
-
-//    /**
-//     * clears all Tables
-//     * @throws DataAccessException
-//     */
-//    public void clearTables() throws DataAccessException {
-//
-//        try (Statement stmt = conn.createStatement()){
-//            String sql = "DELETE FROM Events";
-//            stmt.executeUpdate(sql);
-//        } catch (SQLException e) {
-//            throw new DataAccessException("SQL Error encountered while clearing tables");
-//        }
-//    }
-//
-//    /**
-//     * Populates the server's database with generated data for the specified username.
-//     * The required "username" parameter must be a user already registered with the server.
-//     * If there is any data in the database already associated with the given username, it is deleted.
-//     *
-//     */
-//    public void fill(){
-//
-//    }
 }
 

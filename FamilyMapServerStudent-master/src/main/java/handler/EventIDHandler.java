@@ -13,7 +13,15 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * Handler for event id service
+ */
 public class EventIDHandler extends BaseHandler{
+    /**
+     * Handles event id service which returns single event based on ID
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in EventID Handler");

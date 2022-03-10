@@ -127,6 +127,11 @@ public class User {
         this.personID = personID;
     }
 
+    /**
+     * Override of equals. Compares objects by comparing fields
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         User u = (User) obj;

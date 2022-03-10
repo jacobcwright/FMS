@@ -12,7 +12,15 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * Handles the event service
+ */
 public class EventHandler extends BaseHandler {
+    /**
+     * Calls Event handler which returns all events
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in Event Handler");
         boolean success = false;

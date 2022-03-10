@@ -77,6 +77,10 @@ public class EventIDResult extends Response{
         this.success = true;
     }
 
+    /**
+     * constructor for when passed an event
+     * @param e
+     */
     public EventIDResult(Event e){
         this.associatedUsername = e.getUsername();
         this.eventID = e.getEventID();
@@ -90,6 +94,11 @@ public class EventIDResult extends Response{
         success = true;
     }
 
+    /**
+     * super constructor
+     * @param b
+     * @param message
+     */
     public EventIDResult(boolean b, String message) {
         super(b, message);
     }

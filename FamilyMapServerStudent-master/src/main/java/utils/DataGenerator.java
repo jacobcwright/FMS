@@ -12,28 +12,42 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * Class to assist in fill algorithm
+ */
 public class DataGenerator {
+    /**
+     * list of people generated
+     */
     ArrayList<Person> people;
+
+    /**
+     * list of events generated
+     */
     ArrayList<Event> events;
-//    int generations;
-//    int year;
+
+    /**
+     * Setting buffer of 30 years between each generation's birth dates
+     */
     static int GENERATION_GAP = 30;
 
-
+    /**
+     * constructor for data generator using people and events
+     * @param people
+     * @param events
+     * @param generations
+     */
     public DataGenerator(ArrayList<Person> people, ArrayList<Event> events, int generations) {
         this.people = people;
         this.events = events;
-//        this.generations = generations;
-//        // year at 2003, so each user is 18+
-//        year = 2003;
     }
 
-    public DataGenerator(int generations) {
+    /**
+     * default constructor
+     */
+    public DataGenerator() {
         people = new ArrayList<Person>();
         events = new ArrayList<Event>();
-//        this.generations = generations;
-//        // year at 2003, so each user is 18+
-//        year = 2003;
     }
 
     public ArrayList<Person> getPeople() {
@@ -52,23 +66,9 @@ public class DataGenerator {
         this.events = events;
     }
 
-//    public int getGenerations() {
-//        return generations;
-//    }
-//
-//    public void setGenerations(int generations) {
-//        this.generations = generations;
-//    }
-//
-//    public int getYear() {
-//        return year;
-//    }
-//
-//    public void setYear(int year) {
-//        this.year = year;
-//    }
 
     /**
+     * Main function to generate people and events
      * Parents must be born at least 13 years before their children.
      * Parents must be at least 13 years old when they are married.
      * Parents must not die before their child is born.
@@ -80,6 +80,8 @@ public class DataGenerator {
      * Each event will have a unique event ID, but both marriage events must have matching years and locations.
      * Event locations may be randomly selected, or you may try to make them more realistic
      * @param person current person object
+     * @param generations generations remaining
+     * @param year year of generation
      */
     public void Generate(Person person, int generations, int year){
         if(generations == 0){

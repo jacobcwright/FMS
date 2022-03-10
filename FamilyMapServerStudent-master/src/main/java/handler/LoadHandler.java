@@ -14,7 +14,17 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * Handler for load service
+ */
 public class LoadHandler extends BaseHandler {
+    /**
+     * Handles the load service
+     * Clears all data from the database (just like the /clear API)
+     * Loads the user, person, and event data from the request body into the database.
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in Load Handler");
         boolean success = false;

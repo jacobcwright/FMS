@@ -9,8 +9,16 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.file.*;
 
+/**
+ * Handler for files and serves up webpage
+ */
 public class FileHandler extends BaseHandler {
 
+    /**
+     * serves up webpages based on get request
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         boolean success = false;
 

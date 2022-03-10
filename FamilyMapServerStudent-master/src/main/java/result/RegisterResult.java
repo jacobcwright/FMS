@@ -32,6 +32,11 @@ public class RegisterResult extends Response{
         this.success = true;
     }
 
+    /**
+     * constructor for failed results
+     * @param b
+     * @param m
+     */
     public RegisterResult(boolean b, String m) {
         success = b;
         message = m;

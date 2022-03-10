@@ -22,6 +22,11 @@ public class EventResult extends Response{
         success = true;
     }
 
+    /**
+     * constructor for failed results
+     * @param b
+     * @param s
+     */
     public EventResult(boolean b, String s) {
         this.success = b;
         this.message = s;

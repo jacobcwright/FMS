@@ -17,7 +17,16 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * Handler for person service
+ */
 public class PersonHandler extends BaseHandler {
+    /**
+     * handles the person service
+     * Returns ALL family members of the current user. The current user is determined by the provided authtoken.
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in Person Handler");
         boolean success = false;

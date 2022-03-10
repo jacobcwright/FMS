@@ -23,13 +23,23 @@ import java.net.HttpURLConnection;
 import java.util.Scanner;
 
 /**
- * Handler for Log-in
+ * Handler for Register
  * Handlers (usually):
  * validates authtoken, deserialize Json req to Java, Calls service class, Receive result from service,
  * Serialize Java result to JSON, Send HTTP Response according to result
  */
 public class RegisterHandler extends BaseHandler {
 
+    /**
+     * handler for register service
+     * Creates a new user account (user row in the database)
+     * Generates 4 generations of ancestor data for the new user
+     * (just like the /fill endpoint if called with a generations value of 4 and this new user’s username as parameters)
+     * Logs the user in
+     * Returns an authtoken
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in RegisterHandler");
         boolean success = false;

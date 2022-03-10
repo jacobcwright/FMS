@@ -32,6 +32,11 @@ public class LoginResult extends Response{
         this.success = true;
     }
 
+    /**
+     * constructor for failed results
+     * @param b
+     * @param m
+     */
     public LoginResult(boolean b, String m) {
         success = b;
         message = m;

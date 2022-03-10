@@ -70,9 +70,6 @@ public class UserDAO {
                         result.getString("gender"), result.getString("personID"));
                 return user;
             }
-//            else {
-//                throw new DataAccessException("Error encountered while retrieving from database");
-//            }
         } catch(SQLException e){
             e.printStackTrace();
             throw new DataAccessException("Error encountered while retrieving from database");
@@ -86,23 +83,6 @@ public class UserDAO {
             }
         }
         return null;
-    }
-
-    /**
-     * Get person from database based on personID
-     * @param personID
-     * @return
-     */
-    public Person getPerson(String personID){
-        return null;
-    }
-
-    /**
-     * Deletes user from database based on username
-     * @param username
-     */
-    public void deleteUser(String username){
-
     }
 
     /**

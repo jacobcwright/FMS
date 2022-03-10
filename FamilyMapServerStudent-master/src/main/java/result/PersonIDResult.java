@@ -70,11 +70,18 @@ public class PersonIDResult extends Response{
         this.success = true;
     }
 
+    /**
+     * constructor for failed results
+     */
     public PersonIDResult(boolean b, String m) {
         this.success = b;
         this.message = m;
     }
 
+    /**
+     * constructor based on person object
+     * @param found
+     */
     public PersonIDResult(Person found) {
         this.associatedUsername = found.getAssociatedUsername();
         this.personID = found.getPersonID();

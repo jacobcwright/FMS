@@ -37,7 +37,7 @@ public class FillService {
             Person p = new PersonDAO(db.getConnection()).getPerson(personID);
             new PersonDAO(db.getConnection()).deletePeopleFromUser(f.getUsername());
             new EventDAO(db.getConnection()).deleteEventsFromUser(f.getUsername());
-            DataGenerator data = new DataGenerator(f.getGenerations());
+            DataGenerator data = new DataGenerator();
 
             // generate data
             data.Generate(p, f.getGenerations(), 2003); // year as 2003 so each User is 18 or older

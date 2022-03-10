@@ -108,6 +108,12 @@ public class Person {
         deathYear = 0;
     }
 
+    /**
+     * constructor for name & gender only
+     * @param firstName
+     * @param lastName
+     * @param gender
+     */
     public Person(String firstName, String lastName, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;

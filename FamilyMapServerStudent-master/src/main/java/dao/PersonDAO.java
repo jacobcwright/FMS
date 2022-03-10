@@ -143,9 +143,6 @@ public class PersonDAO {
                         result.getString("motherID"), result.getString("spouseID"));
                 return person;
             }
-//            else {
-//                throw new DataAccessException("Error encountered while retrieving from database");
-//            }
         } catch(SQLException e){
             e.printStackTrace();
             throw new DataAccessException("Error encountered while retrieving from database");

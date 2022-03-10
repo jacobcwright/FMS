@@ -8,19 +8,12 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public abstract class BaseHandler implements HttpHandler {
-    /**String StreamToString(InputStream inputBody) {
-        StringBuilder sb = new StringBuilder();
-        Scanner sc = new Scanner(inputBody);
-        while(sc.hasNext()){
-
-            sb.append(sc.next());
-        }
-        return sb.toString();
-    }
-     **/
-    /*
-		The readString method shows how to read a String from an InputStream.
-	*/
+    /**
+     * Reads from a stream into a string
+     * @param is
+     * @return
+     * @throws IOException
+     */
     String StreamToString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         InputStreamReader sr = new InputStreamReader(is);

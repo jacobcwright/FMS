@@ -12,7 +12,15 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * Handles the clear service
+ */
 public class ClearHandler extends BaseHandler {
+    /**
+     * clears everything from database
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in clear handler");
         boolean success = false;
@@ -39,8 +47,8 @@ public class ClearHandler extends BaseHandler {
 
                 System.out.println("Clear Success!");
 
-            // if something failed
             }
+            // if something failed
             if(!success){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();

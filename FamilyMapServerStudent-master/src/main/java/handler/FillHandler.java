@@ -13,7 +13,17 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * Handler for fill service
+ */
 public class FillHandler extends BaseHandler {
+    /**
+     * handles fill service
+     * Populates the server's database with generated data for the specified username.
+     * The required "username" parameter must be a user already registered with the server.
+     * @param exchange
+     * @throws IOException
+     */
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in Fill Handler");
         boolean success = false;

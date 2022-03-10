@@ -14,7 +14,17 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 
+/**
+ * handler class for person id service
+ */
 public class PersonIDHandler extends BaseHandler{
+    /**
+     * handles the person id service
+     * Returns the single Person object with the specified ID (if the person is associated with the current user).
+     * The current user is determined by the provided authtoken.
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println("in PersonID Handler");
